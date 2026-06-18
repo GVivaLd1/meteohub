@@ -1,1 +1,12 @@
 meteohub/.env
+meteohub/meteohub/__pycache__/__init__.cpython-313.pyc
+meteohub/meteohub/__pycache__/wsgi.cpython-313.pyc
+meteohub/meteohub/__pycache__/settings.cpython-313.pyc
+meteohub/meteohub/__pycache__/urls.cpython-313.pyc
+meteohub/main/__pycache__/__init__.cpython-313.pyc
+meteohub/main/__pycache__/admin.cpython-313.pyc
+meteohub/main/__pycache__/apps.cpython-313.pyc
+meteohub/main/__pycache__/models.cpython-313.pyc
+meteohub/main/__pycache__/urls.cpython-313.pyc
+meteohub/main/__pycache__/views.cpython-313.pyc
+meteohub/main/migrations/__pycache__/__init__.cpython-313.pyc
