@@ -12,22 +12,29 @@
 </head>
 <body>
     <h1>MeteoHub - weather info from different sources</h1>
-    <nav>
-        Navigation
-        <ol start="1">
-            <li><a href="#about">About website</a></li>
-            <li><a href="#comparison">Sources comparison</a></li>
-            <li><a href="#statistics">Statistics</a></li>
-        </ol>
-    </nav>
-    <div>
-        <h2><a name="about" class="header">About website</a></h2>
-    </div>
-    <div>
-        <h2><a name="comparison" class="header">Sources comparison</a></h2>
-    </div>
-    <div>
-        <h2><a name="statistics" class="header">Statistics</a></h2>
-    </div>
-
+    <aside>
+        <nav>
+            Navigation
+            <ol start="1">
+                <li><a href="#about">About website</a></li>
+                <li><a href="#comparison">Sources comparison</a></li>
+                <li><a href="#statistics">Statistics</a></li>
+            </ol>
+        </nav>
+    </aside> 
+    <main>
+        <div>
+            <h2><a name="about">About website</a></h2>
+        </div>
+        <div>
+            <h2><a name="comparison">Sources comparison</a></h2>
+            <div id="weather-info">
+                <div id="chosen-day-info"></div>
+                <div id="comparison-block"></div>
+            </div>
+        </div>
+        <div>
+            <h2><a name="statistics">Statistics</a></h2>
+        </div>
+    </main>
 </body>
