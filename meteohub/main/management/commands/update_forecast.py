@@ -1,12 +1,15 @@
 import time
+from datetime import date
 from django.core.management.base import BaseCommand
 from main.models import City
+from main.models import WeatherReport
 from main.parsers.sinoptic import parse_sinoptic
 
 class Command(BaseCommand):
-    help = "Пропускає всі активні міста через ряд погодних парсерів"
+    help = "Запускає процес парсингу погоди з джерел. Оновлює БД додаючи/оновлюючи актуальні прогнози та видаляючи застарілі"
 
     def handle(self, *args, **options):
+        WeatherReport.objects.filter(target_date__lt=date.today()).delete()
         active_cities = City.objects.filter(is_monitored=True)
 
         if not active_cities:
