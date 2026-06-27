@@ -64,11 +64,16 @@ header, section {
     font-size: 14px;
 }
 
-.day-report {
+.day-report, .day-report-undefined {
     border: 1px solid blue;
-    min-height: 80px;
+    min-height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+
+.day-report-undefined {
+    color: gray;
+    font-size: 12px;
 }

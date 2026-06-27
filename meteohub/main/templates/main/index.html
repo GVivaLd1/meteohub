@@ -34,69 +34,33 @@
                 <div id="summary"></div>
                 <div id="comparison-block">
                     <div class="days-of-week">
-                        <span class="day-name">Понеділок</span>
-                        <span class="day-name">Вівторок</span>
-                        <span class="day-name">Середа</span>
-                        <span class="day-name">Четвер</span>
-                        <span class="day-name">П'ятниця</span>
-                        <span class="day-name">Субота</span>
-                        <span class="day-name">Неділя</span>
+                        <div class="spacer"></div>
+                        {% for d in dates %}
+                             <span class="day-name">{{ d|date:"d.m" }}</span>
+                        {% endfor %}
+                        <div class="spacer"></div>
                     </div>
-                    <div class="source-report">
-                        <div class="source-name"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="source-name"></div>
-                    </div>
-                    <div class="source-report">
-                        <div class="source-name"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="source-name"></div>
-                    </div>
-                    <div class="source-report">
-                        <div class="source-name"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="source-name"></div>
-                    </div>
-                    <div class="source-report">
-                        <div class="source-name"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="source-name"></div>
-                    </div>
-                    <div class="source-report">
-                        <div class="source-name"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="day-report"></div>
-                        <div class="source-name"></div>
-                    </div>
+                    {% for source, days_dict in grouped_data.items %}
+
+                        <div class="source-report">
+
+                            <div class="source-name">{{source}}</div>
+                            {% for target_date, report in days_dict.items %}
+
+                                {% if report %}
+                                    <div class="day-report">
+                                        <strong>{{ report.min_temp }}°C</strong> ... <strong>{{ report.max_temp }}°C</strong>
+                                    </div>
+                                {% else %}
+                                    <div class="day-report-undefined">Немає даних</div>
+                                {% endif %}
+
+                            {% endfor %}
+                            <div class="source-name">{{source}}</div>
+
+                        </div>
+
+                    {% endfor %}
                 </div>
             </div>
         </section>
