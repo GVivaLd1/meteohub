@@ -20,9 +20,8 @@ def parse_sinoptic(city_obj):
     weekly_forecast = soup.find("div", class_="DMP0kolW")
 
     if not weekly_forecast:
-        print(f"[-] Не знайдено прогноз для міста {city_obj.name}")
+        print(f"[-] Парсер sinoptic не знайшов блок прогнозу для міста {city_obj.name}")
         return
-    
     
     days = weekly_forecast.find_all("a", class_="tkK415TH")
 
@@ -54,4 +53,4 @@ def parse_sinoptic(city_obj):
             )
 
             status = "Створено" if created else "Оновлено"
-            print(f"[{status}] {city_obj.name} | {target_date} | Мін: {min_temp}°C | Макс: {max_temp}°C")
+            print(f"[{status}] {city_obj.name} | {target_date} | Мін: {min_temp}°C | Макс: {max_temp}°C - Sinoptic")
