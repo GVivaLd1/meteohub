@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from main.models import City
 from main.models import WeatherReport
 from main.parsers.sinoptic import parse_sinoptic
+from main.parsers.meteofor import parse_meteofor
 
 class Command(BaseCommand):
     help = "Запускає процес парсингу погоди з джерел. Оновлює БД додаючи/оновлюючи актуальні прогнози та видаляючи застарілі"
@@ -18,6 +19,7 @@ class Command(BaseCommand):
         for city in active_cities:
             try:
                 parse_sinoptic(city)
+                parse_meteofor(city)
             except Exception as e:
                 self.stdout.write(self.style.ERROR(f"\nПомилка парсингу: {e}"))
 

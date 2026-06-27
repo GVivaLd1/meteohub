@@ -1,0 +1,53 @@
+import sys
+import time
+import requests
+from bs4 import BeautifulSoup
+from datetime import date, timedelta
+from main.models import WeatherReport
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+}
+
+def parse_meteofor(city_obj):
+    url = f"https://meteofor.com.ua/weather-{city_obj.url_name}-4944/weekly/"
+
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, "lxml")
+
+    weekly_forecast = soup.find("div", class_="widget-body")
+
+    if not weekly_forecast:
+        print(f"[-] Парсер meteofor не знайшов блок прогнозу для міста {city_obj.name}")
+        return
+    
+    temperatures_row = weekly_forecast.find("div", class_="values")
+    temperatures = temperatures_row.find_all("div", class_="value")
+
+    today_date = date.today()
+    
+    for i, temperature in enumerate(temperatures):
+        time.sleep(3)
+        target_date = today_date + timedelta(days=i)
+
+        min_str = temperature.find("div", class_="mint").find("temperature-value").get("value")
+        max_str = temperature.find("div", class_="maxt").find("temperature-value").get("value")
+
+        min_temp = int(min_str)
+        max_temp = int(max_str)
+
+        report, created = WeatherReport.objects.update_or_create(
+            city=city_obj,
+            source="Meteofor",
+            target_date=target_date,
+            
+            defaults={
+                "min_temp": min_temp,
+                "max_temp": max_temp
+            }
+        )
+
+        status = "Створено" if created else "Оновлено"
+        print(f"[{status}] {city_obj.name} | {target_date} | Мін: {min_temp}°C | Макс: {max_temp}°C - Meteofor")
