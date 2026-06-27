@@ -10,3 +10,13 @@ meteohub/main/__pycache__/models.cpython-313.pyc
 meteohub/main/__pycache__/urls.cpython-313.pyc
 meteohub/main/__pycache__/views.cpython-313.pyc
 meteohub/main/migrations/__pycache__/__init__.cpython-313.pyc
+meteohub/main/management/__pycache__/__init__.cpython-313.pyc
+meteohub/main/migrations/__pycache__/0001_initial.cpython-313.pyc
+meteohub/main/management/commands/__pycache__/__init__.cpython-313.pyc
+meteohub/main/management/commands/__pycache__/run_parsers.cpython-313.pyc
+meteohub/main/migrations/__pycache__/0002_alter_weatherreport_options_and_more.cpython-313.pyc
+meteohub/main/migrations/__pycache__/0003_alter_weatherreport_unique_together.cpython-313.pyc
+meteohub/main/parsers/__pycache__/__init__.cpython-313.pyc
+meteohub/main/parsers/__pycache__/sinoptic.cpython-313.pyc
+meteohub/main/management/commands/__pycache__/update_forecast.cpython-313.pyc
+meteohub/main/parsers/__pycache__/meteofor.cpython-313.pyc
