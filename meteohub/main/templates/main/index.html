@@ -36,7 +36,10 @@
                     <div class="days-of-week">
                         <div class="spacer"></div>
                         {% for d in dates %}
-                             <span class="day-name">{{ d|date:"d.m" }}</span>
+                            <div class="day-name">
+                                <span class="day-weekday">{{ d|date:"l" }}</span>
+                                <span class="day-date">{{ d|date:"d.m" }}</span>
+                            </div>
                         {% endfor %}
                         <div class="spacer"></div>
                     </div>
@@ -44,19 +47,21 @@
 
                         <div class="source-report">
 
-                            <div class="source-name">{{source}}</div>
+                            <div class="source-name source-left">{{source}}</div>
                             {% for target_date, report in days_dict.items %}
 
                                 {% if report %}
                                     <div class="day-report">
-                                        <strong>{{ report.min_temp }}°C</strong> ... <strong>{{ report.max_temp }}°C</strong>
+                                        <span class="temp-min">{{ report.min_temp }}°</span>
+                                        <span class="temp-divider"></span>
+                                        <span class="temp-max">{{ report.max_temp }}°</span>
                                     </div>
                                 {% else %}
                                     <div class="day-report-undefined">Немає даних</div>
                                 {% endif %}
 
                             {% endfor %}
-                            <div class="source-name">{{source}}</div>
+                            <div class="source-name source-right">{{source}}</div>
 
                         </div>
 
