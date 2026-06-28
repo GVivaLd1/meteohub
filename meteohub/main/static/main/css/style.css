@@ -8,18 +8,150 @@
 
 body {
     display: flex;
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(242, 242, 242);
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
 }
 
-aside {
-    width: 20%;
+.sidebar {
+    width: 260px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    flex-shrink: 0;
+    transition: margin-left 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin-left: 0; 
+    z-index: 100; 
+}
+
+.sidebar.collapsed {
+    margin-left: -260px; 
+}
+
+.sidebar-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+.sidebar-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+.sidebar-brand h2 {
+    color: #fff;
+    margin-top: 0;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.sidebar-nav h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #95a5a6;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 8px;
+}
+
+.sidebar-nav a {
+    color: #bdc3c7;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.2s, padding-left 0.2s;
+    display: block;
+}
+
+.sidebar-nav a:hover {
+    color: #3498db;
+    padding-left: 5px;
+}
+
+.sidebar-info {
+    margin-top: auto;
+    background-color: #34495e;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.info-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.info-label {
+    color: #95a5a6;
+}
+
+.info-value {
+    color: #fff;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.toggle-btn {
+    position: absolute;
+    right: -24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 50px;
+    background-color: #2c3e50;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 4px 0 6px rgba(0,0,0,0.1); 
+    transition: background-color 0.2s;
+}
+
+.toggle-btn:hover {
+    background-color: #34495e;
+}
+
+.toggle-btn svg {
+    transition: transform 0.4s ease;
+}
+
+.sidebar.collapsed .toggle-btn svg {
+    transform: rotate(180deg);
 }
 
 main {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%;
+    transition: all 0.4s ease;
 }
 
 header, section {
@@ -31,11 +163,13 @@ header, section {
 }
 
 #weather-info {
-    width: 70%;
+    width: 95%; 
+    max-width: 1050px;
     border-radius: var(--main-radius);
     background-color: white;
     padding-bottom: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin: 0 auto;
 }
 
 #summary {
