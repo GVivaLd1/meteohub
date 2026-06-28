@@ -6,6 +6,7 @@ from main.models import WeatherReport
 from main.parsers.sinoptic import parse_sinoptic
 from main.parsers.meteofor import parse_meteofor
 from main.parsers.pogoda_radar import parse_pogoda_radar
+from main.parsers.foreca import parse_foreca
 
 class Command(BaseCommand):
     help = "Запускає процес парсингу погоди з джерел. Оновлює БД додаючи/оновлюючи актуальні прогнози та видаляючи застарілі"
@@ -22,6 +23,7 @@ class Command(BaseCommand):
                 parse_sinoptic(city)
                 parse_meteofor(city)
                 parse_pogoda_radar(city)
+                parse_foreca(city)
             except Exception as e:
                 self.stdout.write(self.style.ERROR(f"\nПомилка парсингу: {e}"))
 
