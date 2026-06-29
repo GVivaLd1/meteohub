@@ -272,6 +272,8 @@ header, section {
 .day-report, .day-report-undefined {
     min-height: 125px;
     display: flex;
+    flex-direction: column;
+    gap: 8px;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -292,6 +294,17 @@ header, section {
 .day-report-undefined {
     color: gray;
     font-size: 12px;
+}
+
+.weather-icon {
+    height: 60px;
+    width: 60px;
+}
+
+.temperatures {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .temp-min {

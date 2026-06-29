@@ -86,9 +86,13 @@
 
                                 {% if report %}
                                     <div class="day-report">
-                                        <span class="temp-min">{{ report.min_temp }}°</span>
-                                        <span class="temp-divider"></span>
-                                        <span class="temp-max">{{ report.max_temp }}°</span>
+                                        <img src="{% static report.icon_path %}" alt="{{ report.get_condition_display }}" class="weather-icon">
+
+                                        <div class="temperatures">
+                                            <span class="temp-min">{{ report.min_temp }}°</span>
+                                            <span class="temp-divider"></span>
+                                            <span class="temp-max">{{ report.max_temp }}°</span>
+                                        </div>
                                     </div>
                                 {% else %}
                                     <div class="day-report-undefined">Немає даних</div>

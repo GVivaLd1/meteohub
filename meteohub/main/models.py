@@ -9,6 +9,23 @@ class City(models.Model):
         return self.name
     
 class WeatherReport(models.Model):
+    weather_coditions = [
+        ('clear', 'Ясно'),
+        ('clear_night', 'Ясно, ніч'),
+        ('little_clouds', 'Малохмарно'),
+        ('clouds', 'Хмарно'),
+        ('clouds_night', 'Хмарно, ніч'),
+        ('gloom', 'Похмуро'), 
+        ('little_rain', 'Невеликий дощ'),
+        ('rain', 'Дощ'),
+        ('sunny_rain', 'Дощ з сонцем'),
+        ('snow', 'Сніг'),
+        ('light_snow', 'Невеликий сніг'),
+        ('snow_and_rain', 'Сніг з дощем'),
+        ('storm', 'Гроза'),
+        ('hailstorm', 'Град')
+    ]
+
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='weather_reports')
 
     source = models.CharField(verbose_name="Джерело", max_length=50)
@@ -16,6 +33,13 @@ class WeatherReport(models.Model):
     max_temp = models.IntegerField(verbose_name="Макс. температура", null=True)
     parsed_at = models.DateTimeField(verbose_name="Час парсингу", auto_now_add=True, null=True)
     target_date = models.DateField(verbose_name="Дата прогнозу", null=True)
+    condition = models.CharField(verbose_name="Стан погоди", max_length=20, choices=weather_coditions, null=True)
+
+    @property
+    def icon_path(self):
+        if not self.condition:
+            return "main/img/weather_icons/not_found.png"
+        return f"main/img/weather_icons/{self.condition}.png"
 
     class Meta:
         unique_together = ['city', 'source', 'target_date']
