@@ -10,8 +10,8 @@ sys.stdout.reconfigure(encoding='utf-8')
 weather_map = {
     "сонячно": "clear",
     "гроза": "storm",
-    "невеликий дощ": "little_rain",
-    "злива": "rain",
+    "невеликий дощ": "sunny_rain",
+    "злива": "sunny_rain",
     "мінлива хмарність": "little_clouds",
     "переважно хмарно": "clouds"
 }

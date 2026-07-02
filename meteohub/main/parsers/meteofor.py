@@ -10,12 +10,14 @@ sys.stdout.reconfigure(encoding='utf-8')
 weather_map = {
     "Безхмарно": "clear",
     "Хмарно, дощ, гроза": "storm",
-    "Хмарно, невеликий дощ": "little_rain",
-    "Малохмарно, невеликий дощ": "little_rain",
+    "Хмарно, невеликий дощ": "sunny_rain",
+    "Малохмарно, невеликий дощ": "sunny_rain",
     "Хмарно, дощ": "rain",
     "Похмуро, дощ": "rain",
     "Малохмарно": "little_clouds",
-    "Похмуро": "clouds"
+    "Хмарно, без істотних опадів": "little_clouds",
+    "Похмуро": "clouds",
+    "Малохмарно, дощ, гроза": "storm"
 }
 
 headers = {
