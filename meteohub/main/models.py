@@ -31,7 +31,7 @@ class WeatherReport(models.Model):
     source = models.CharField(verbose_name="Джерело", max_length=50)
     min_temp = models.IntegerField(verbose_name="Мін. температура", null=True)
     max_temp = models.IntegerField(verbose_name="Макс. температура", null=True)
-    parsed_at = models.DateTimeField(verbose_name="Час парсингу", auto_now_add=True, null=True)
+    parsed_at = models.DateTimeField(verbose_name="Час парсингу", auto_now=True, null=True)
     target_date = models.DateField(verbose_name="Дата прогнозу", null=True)
     condition = models.CharField(verbose_name="Стан погоди", max_length=20, choices=weather_coditions, null=True)
 

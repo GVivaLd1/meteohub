@@ -20,9 +20,14 @@ def index(request):
             
         grouped_data[source][report.target_date] = report
 
+    last_report = WeatherReport.objects.order_by('-parsed_at').first()
+
+    last_update_time = last_report.parsed_at if last_report else None
+
     forecast = {
         'city': city,
         'dates': target_dates,
-        'grouped_data': grouped_data
+        'grouped_data': grouped_data,
+        'last_update_time': last_update_time
     }
     return render(request, 'main/index.html', forecast)

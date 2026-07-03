@@ -40,7 +40,21 @@
             <div class="sidebar-info">
                 <div class="info-block">
                     <span class="info-label">Останнє оновлення:</span>
-                    <span class="info-value">Сьогодні, 06:00</span>
+                    <span class="info-value">
+                        {% if last_update_time %}
+        
+                            {% now "d.m.Y" as current_date %}
+                            
+                            {% if last_update_time|date:"d.m.Y" == current_date %}
+                                Сьогодні, {{ last_update_time|date:"H:i" }}
+                            {% else %}
+                                {{ last_update_time|date:"d.m.Y, H:i" }}
+                            {% endif %}
+
+                        {% else %}
+                            Невідомо
+                        {% endif %}
+                    </span>
                 </div>
                 <div class="info-block">
                     <span class="info-label">Розробка:</span>
