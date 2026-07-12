@@ -79,7 +79,44 @@
         <section>
             <h2><a name="comparison">Sources comparison</a></h2>
             <div id="weather-info">
-                <div id="summary"></div>
+                <div id="summary">
+                    <div id="search-block">
+                        <select name="cities" id="city-selector">
+                            <option value="kyiv">Київ</option>
+                            <option value="odesa">Одеса</option>
+                        </select>
+                    </div>
+                    <div id="table-statistics">
+                        <div id="stats-head">
+                            <h1>Загальна статистика</h1>
+                        </div>
+                        <div id="stats-body">
+
+                            <div class="stat-card">
+                                <span class="stat-name">Максимальна температура</span>
+                                <span class="stat-content">{{ general_statistics.highest_temp.0 }}</span>
+                                <span class="stat-source">{{ general_statistics.highest_temp.1 }}</span>
+                            </div>
+
+                            <div class="stat-card">
+                                <span class="stat-name">Мінімальна температура</span>
+                                <span class="stat-content">{{ general_statistics.lowest_temp.0 }}</span>
+                                <span class="stat-source">{{ general_statistics.lowest_temp.1 }}</span>
+                            </div>
+
+                            <div class="stat-card">
+                                <span class="stat-name">Найчастіша погода</span>
+                                <span class="stat-content">{{ general_statistics.most_frequent_condition }}</span>
+                            </div>
+
+                            <div class="stat-card">
+                                <span class="stat-name">Найрідкісніша погода</span>
+                                <span class="stat-content">{{ general_statistics.least_frequent_condition }}</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
                 <div id="comparison-block">
                     <div class="days-of-week">
                         <div class="spacer"></div>

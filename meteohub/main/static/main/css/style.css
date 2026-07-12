@@ -162,6 +162,7 @@ header, section {
     width: 100%;
 }
 
+/* Секція порівняння погоди */
 #weather-info {
     width: 95%; 
     max-width: 1050px;
@@ -172,21 +173,134 @@ header, section {
     margin: 0 auto;
 }
 
+/* Вибір міста та результати порівняння джерел */
 #summary {
-    height: 200px;
+    min-height: 200px;
     width: 100%;
-    background: linear-gradient(135deg, #89c4ff 0%, #94caff 100%); 
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); 
     border-top-left-radius: var(--main-radius);
     border-top-right-radius: var(--main-radius);
     margin-bottom: 20px;
-    border-bottom: 3px solid #f0f0f0;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    color: #1a252f;
+    padding: 25px 0;
+}
+
+#search-block {
+    width: 30%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #1a252f;
+    border-right: 1px solid rgba(255,255,255,0.2);
 }
 
+#city-selector {
+    width: 65%;
+    padding: 10px 14px;
+    margin: 10px;
+    border: none;
+    border-radius: var(--main-radius);
+    background-color: #ffffff;
+    color: #2c3e50;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+}
+
+#city-selector:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+}
+
+#city-selector:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.4);
+}
+
+#table-statistics {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#stats-head {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#stats-head h1 {
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin: 0;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+#stats-body {
+    width: 92%;
+    display: flex;
+    gap: 14px;
+}
+
+.stat-card {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.stat-name {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #95a5a6;
+}
+
+.stat-content {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.stat-source {
+    font-size: 11px;
+    color: #bdc3c7;
+    font-style: italic;
+}
+
+/* Таблиця порівняння */
 #comparison-block {
     display: grid;
     grid-template-columns: 40px repeat(7, 1fr) 40px;
