@@ -239,9 +239,13 @@ header, section {
 }
 
 #stats-head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    position: relative;
 }
 
 #stats-head h1 {
@@ -251,6 +255,25 @@ header, section {
     letter-spacing: 0.5px;
     margin: 0;
     text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+#stats-head button {
+    position: absolute;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+    padding: 0 10px;
+    margin-right: 20px;
+}
+
+#stats-head button:hover {
+    color: #e74c3c;
+    transform: scale(1.1);
 }
 
 #stats-body {
