@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 from django.shortcuts import render
 from .models import City, WeatherReport
-from django.db.models import Count
+from django.db.models import Count, Avg
 
 def index(request):
     city = City.objects.first()
@@ -85,6 +85,21 @@ def index(request):
 
         t_date_reports = WeatherReport.objects.filter(city=city, target_date=t_date)
 
+        # Отримання середніх значень температур
+        average_temps = t_date_reports.aggregate(
+            raw_avg_min=Avg("min_temp"),
+            raw_avg_max=Avg("max_temp")
+        )
+
+        if average_temps["raw_avg_min"] and average_temps["raw_avg_max"] is not None:
+
+            avg_min = round(average_temps["raw_avg_min"]) 
+            avg_max = round(average_temps["raw_avg_max"])
+
+            days_statistics[date_key]["avg_min"] = avg_min
+            days_statistics[date_key]["avg_max"] = avg_max
+        
+        # Отримання макс. та мін. температур
         lowest_temp_report = t_date_reports.order_by("min_temp").first()
         highest_temp_report = t_date_reports.order_by("-max_temp").first()
             
@@ -134,7 +149,7 @@ def index(request):
         "dates": target_dates,
         "grouped_data": grouped_data,
         "last_update_time": last_update_time,
-        "general_statistics": general_statistics,
-        "days_statistics": days_statistics
+        "general_statistics": general_statistics,   #lowest_temp, highest_temp, least_frequent_condition, most_frequent_condition
+        "days_statistics": days_statistics          #avg_min avg_max lowest_temp, highest_temp, least_frequent_condition, most_frequent_condition
     }
     return render(request, "main/index.html", forecast)
