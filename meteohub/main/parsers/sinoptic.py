@@ -16,6 +16,7 @@ weather_map = {
     "Хмарно з проясненнями, дощ": "little_rain",
     "Мінлива хмарність, дрібний дощ": "sunny_rain",
     "Мінлива хмарність, дощ": "sunny_rain",
+    "Хмарно з проясненнями, дрібний дощ": "sunny_rain",
     "Суцільна хмарність, сильний дощ": "rain",
     "Невелика хмарність": "little_clouds",
     "Мінлива хмарність": "clouds",
@@ -58,6 +59,13 @@ def parse_sinoptic(city_obj):
             max_temp = int(max_str)
 
             weather_string = day.find("div", class_="+STyqv+a").find("div").get("aria-label").replace("\n", " ")
+            weather_code = weather_map.get(weather_string)
+            
+            if not weather_code:
+
+                with open("main/management/exceptions.txt", "a", encoding="utf-8") as file:
+                    file.write(f"[Sinoptik] - {weather_string} ({target_date})\n")
+                continue
             
             report, created = WeatherReport.objects.update_or_create(
                 city=city_obj,

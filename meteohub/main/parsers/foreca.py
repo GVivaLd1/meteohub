@@ -53,6 +53,13 @@ def parse_foreca(city_obj):
         max_temp = int(max_str)
 
         weather_string = day.find("a").get("title")
+        weather_code = weather_map.get(weather_string)
+            
+        if not weather_code:
+
+            with open("main/management/exceptions.txt", "a", encoding="utf-8") as file:
+                file.write(f"[Foreca] - {weather_string} ({target_date})\n")
+            continue
 
         report, created = WeatherReport.objects.update_or_create(
             city=city_obj,

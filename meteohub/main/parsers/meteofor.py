@@ -12,6 +12,7 @@ weather_map = {
     "Хмарно, дощ, гроза": "storm",
     "Хмарно, сильний дощ, гроза": "storm",
     "Малохмарно, дощ, гроза": "storm",
+    "Хмарно, дощ, гроза, туман": "storm",
     "Хмарно, невеликий дощ": "sunny_rain",
     "Малохмарно, невеликий дощ": "sunny_rain",
     "Малохмарно, дощ": "sunny_rain",
@@ -59,6 +60,13 @@ def parse_meteofor(city_obj):
         max_temp = int(max_str)
 
         weather_string = icons[i].get("data-tooltip")
+        weather_code = weather_map.get(weather_string)
+            
+        if not weather_code:
+
+            with open("main/management/exceptions.txt", "a", encoding="utf-8") as file:
+                file.write(f"[Meteofor] - {weather_string} ({target_date})\n")
+            continue
 
         report, created = WeatherReport.objects.update_or_create(
             city=city_obj,
