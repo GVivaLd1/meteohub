@@ -8,14 +8,18 @@
 
 body {
     display: flex;
-    background-color: rgb(242, 242, 242);
+    background-color: fdfdfd;
     min-height: 100vh;
     margin: 0;
     overflow-x: hidden;
 }
 
+h1, h2, h3 {
+    padding: 10px;
+}
+
 .sidebar {
-    width: 260px;
+    width: 270px;
     background-color: #2c3e50;
     color: #ecf0f1;
     position: sticky;
@@ -162,6 +166,43 @@ header, section {
     width: 100%;
 }
 
+.section-about {
+    width: 80%;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    border: none;
+    border-left: 4px solid #3498db;
+    border-radius: var(--main-radius);
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.section-about:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.section-about:last-child {
+    margin-bottom: 0;
+}
+
+.section-about h3 {
+    margin: 0 0 12px 0;
+    padding: 0;
+    color: #2c3e50;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.section-about p {
+    margin: 0;
+    color: #55606e;
+    font-size: 15px;
+    line-height: 1.7;
+    text-align: justify;
+}
+
 /* Секція порівняння погоди */
 #weather-info {
     width: 95%; 
@@ -244,7 +285,7 @@ header, section {
     align-items: center;
     width: 100%;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 16px;
     position: relative;
 }
 
@@ -276,10 +317,28 @@ header, section {
     transform: scale(1.1);
 }
 
-#stats-body {
+#stats-body-general, #stats-body-day {
     width: 92%;
     display: flex;
-    gap: 14px;
+    gap: 10px;
+}
+
+#stats-body-day {
+    flex-direction: column;
+}
+
+#stats-body-day h2 {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin: 0;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.15);   
+}
+
+.stats-type {
+    display: flex;
+    gap: 10px;
 }
 
 .stat-card {

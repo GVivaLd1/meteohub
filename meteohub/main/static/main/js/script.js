@@ -22,29 +22,48 @@ daysBlock.addEventListener("click", (event) => {
                             <h1>Статистика за ${clickedEl.dataset.date}</h1>
                             <button>X</button>
                         </div>
-                        <div id="stats-body">
+                        <div id="stats-body-day">
 
-                            <div class="stat-card">
-                                <span class="stat-name">Максимальна температура</span>
-                                <span class="stat-content">${chosenDayDATA.highest_temp[0]}</span>
-                                <span class="stat-source">${chosenDayDATA.highest_temp[1]}</span>
+                            <h2>Температура</h2>
+                            <div class="stats-type">
+                                
+                                <div class="stat-card">
+                                    <span class="stat-name">Максимальна</span>
+                                    <span class="stat-content">${chosenDayDATA.highest_temp[0]}</span>
+                                    <span class="stat-source">${chosenDayDATA.highest_temp[1]}</span>
+                                </div>
+
+                                <div class="stat-card">
+                                    <span class="stat-name">Мінімальна</span>
+                                    <span class="stat-content">${chosenDayDATA.lowest_temp[0]}</span>
+                                    <span class="stat-source">${chosenDayDATA.lowest_temp[1]}</span>
+                                </div>
+
+                                <div class="stat-card">
+                                    <span class="stat-name">Середня максимальна</span>
+                                    <span class="stat-content">${chosenDayDATA.avg_max}</span>
+                                </div>
+
+                                <div class="stat-card">
+                                    <span class="stat-name">Середня мінімальна</span>
+                                    <span class="stat-content">${chosenDayDATA.avg_min}</span>
+                                </div>
                             </div>
 
-                            <div class="stat-card">
-                                <span class="stat-name">Мінімальна температура</span>
-                                <span class="stat-content">${chosenDayDATA.lowest_temp[0]}</span>
-                                <span class="stat-source">${chosenDayDATA.lowest_temp[1]}</span>
+                            <h2>Погода</h2>
+                            <div class="stats-type">
+
+                                <div class="stat-card">
+                                    <span class="stat-name">Найчастіша</span>
+                                    <span class="stat-content">${chosenDayDATA.most_frequent_condition}</span>
+                                </div>
+
+                                <div class="stat-card">
+                                    <span class="stat-name">Найрідкісніша</span>
+                                    <span class="stat-content">${chosenDayDATA.least_frequent_condition}</span>
+                                </div>
                             </div>
 
-                            <div class="stat-card">
-                                <span class="stat-name">Найчастіша погода</span>
-                                <span class="stat-content">${chosenDayDATA.most_frequent_condition}</span>
-                            </div>
-
-                            <div class="stat-card">
-                                <span class="stat-name">Найрідкісніша погода</span>
-                                <span class="stat-content">${chosenDayDATA.least_frequent_condition}</span>
-                            </div>
                         </div>`
 
     const exitBtn = tableStatsBlock.querySelector("button");
