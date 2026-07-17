@@ -126,10 +126,23 @@
             <div id="weather-info">
                 <div id="summary">
                     <div id="search-block">
-                        <select name="cities" id="city-selector">
-                            <option value="kyiv">Київ</option>
-                            <option value="odesa">Одеса</option>
-                        </select>
+                        <label for="city-selector">Вибір міста</label>
+                        <div id="city-search">
+                            <input type="text" name="city" id="city-selector" placeholder="Оберіть місто для аналітики…" autocomplete="off">
+                            <button type="button" aria-label="Знайти місто"></button>
+                        </div>
+
+                        <div class="history-title">
+                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>Нещодавні пошуки</span>
+                        </div>
+
+                        <ul class="search-history">
+                            <li class="history-element">Київ</li>
+                        </ul>
                     </div>
                     <div id="table-statistics">
                         <div id="stats-head">
