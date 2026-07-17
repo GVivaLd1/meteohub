@@ -1,11 +1,57 @@
 const sideBarButton = document.querySelector("#toggle-sidebar-btn");
 const daysBlock = document.querySelector(".days-of-week");
 const tableStatsBlock = document.querySelector("#table-statistics");
+const cityInput = document.querySelector("#city-input");
+const citySearchButton = document.querySelector("#city-search");
+const historyBlock = document.querySelector(".search-history");
 
 const rawDaysDATA = document.querySelector("#days-stats").textContent;
 const daysDATA = JSON.parse(rawDaysDATA);
 
 const generalStats = tableStatsBlock.innerHTML;
+
+const maxHistoryLenth = 5;
+
+let history = getSearchHistory();
+
+renderHistory();
+
+function getSearchHistory() {
+    const history = localStorage.getItem("weather_search_history");
+    return history ? JSON.parse(history) : [];
+}
+
+function addToHistory(cityName) {
+    const cleanName = cityName.trim();
+    if (!cleanName) return;
+
+    let history = getSearchHistory();
+    history = history.filter(city => city.toLowerCase() !== cleanName.toLowerCase());
+
+    history.unshift(cleanName);
+
+    if (history.length > maxHistoryLenth) {
+        history.pop();
+    }
+
+    localStorage.setItem("weather_search_history", JSON.stringify(history));
+    renderHistory();
+}
+
+function renderHistory() {
+    const history = getSearchHistory();
+
+    historyBlock.innerHTML = "";
+
+    history.forEach(city => {
+        li = document.createElement("li");
+
+        li.className = "history-element";
+        li.textContent = city;
+
+        historyBlock.appendChild(li);
+    });
+}
 
 sideBarButton.addEventListener("click", () => {
     document.getElementById("sidebar").classList.toggle("collapsed");
@@ -71,4 +117,14 @@ daysBlock.addEventListener("click", (event) => {
     exitBtn.addEventListener("click", () => {
         tableStatsBlock.innerHTML = generalStats;
     });
+});
+
+citySearchButton.addEventListener("click", () => {
+    addToHistory(cityInput.value);
+});
+
+cityInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        addToHistory(cityInput.value);
+    }
 });

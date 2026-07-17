@@ -428,7 +428,7 @@ header h1 {
     box-shadow: 0 0 0 3px rgba(255,255,255,0.4);
 }
 
-#city-selector {
+#city-input {
     flex: 1;
     min-width: 0;
     padding: 11px 4px 11px 14px;
@@ -440,11 +440,11 @@ header h1 {
     font-family: inherit;
 }
 
-#city-selector:focus {
+#city-input:focus {
     outline: none;
 }
 
-#city-selector::placeholder {
+#city-input::placeholder {
     color: #95a5a6;
     font-weight: 500;
 }
