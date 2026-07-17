@@ -7,6 +7,9 @@
     <meta name="description" content="Main page" />
     <meta name="keywords" content="weather, statistics" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
     <title>MeteoHub</title>
     {{ days_statistics|json_script:"days-stats" }}
@@ -74,11 +77,52 @@
         <header>
             <h1>MeteoHub - weather info from different sources</h1>
         </header>
-        <section>
-            <h2><a name="about">About website</a></h2>
+        <section id="about" class="page-section page-section--about">
+            <div class="section-header">
+                <span class="section-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="16" x2="12" y2="11"/><circle cx="12" cy="7.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+                </span>
+                <h2>Про сайт</h2>
+            </div>
+
+            <div class="about-grid">
+                <section class="about-card about-card--idea">
+                    <span class="about-card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>
+                    </span>
+                    <h3>Головна ідея</h3>
+                    <p>
+                        Переглядаючи прогнози погоди, нерідко можна зіткнутися з їхньою неоднозначністю. 
+                        Одне джерело може прогнозувати дощ, друге - лише невелику хмарність, а третє взагалі град. 
+                        Тож виникає логічне питання: а кому вірити? Вирішення цієї проблеми і є головною метою MeteoHub. 
+                        На даний момент сайт збирає інформацію з чотирьох авторитетних джерел 
+                        (Sinoptik, Meteofor, Foreca та Pogoda & Radar) та порівнює їх між собою. 
+                        Це дає змогу робити більш точні (проте досі не досконалі) судження щодо погоди, спираючись на думку більшості.
+                    </p>
+                </section>
+
+                <section class="about-card about-card--how">
+                    <span class="about-card-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    </span>
+                    <h3>Як це працює</h3>
+                    <p>
+                        MeteoHub не вгадує погоду самостійно, а є свого роду аналітичною системою, яка робить висновки на основі порівняння джерел. 
+                        В одному зручному дашборді ви можете не лише побачити прогнози на тиждень, а й переглянути зведену 
+                        статистику на кожен день. Система автоматично вираховує середню, мінімальну та максимальну температури серед усіх 
+                        сервісів, а також визначає найчастіший і найрідкісніший стани погоди. 
+                        Це дозволяє миттєво оцінити загальну метеорологічну тенденцію без необхідності відкривати десятки різних вкладок.
+                    </p>
+                </section>
+            </div>
         </section>
-        <section>
-            <h2><a name="comparison">Порівняння джерел</a></h2>
+        <section id="comparison" class="page-section page-section--comparison">
+            <div class="section-header">
+                <span class="section-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="M16 21l4-4-4-4"/><path d="M20 17H4"/></svg>
+                </span>
+                <h2>Порівняння джерел</h2>
+            </div>
             <div id="weather-info">
                 <div id="summary">
                     <div id="search-block">
@@ -159,8 +203,13 @@
                 </div>
             </div>
         </section>
-        <section>
-            <h2><a name="statistics">Статистика</a></h2>
+        <section id="statistics" class="page-section page-section--statistics">
+            <div class="section-header">
+                <span class="section-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="20" x2="20" y2="20"/><rect x="6" y="12" width="3" height="8"/><rect x="11" y="7" width="3" height="13"/><rect x="16" y="10" width="3" height="10"/></svg>
+                </span>
+                <h2>Статистика</h2>
+            </div>
         </section>
     </main>
 </body>
