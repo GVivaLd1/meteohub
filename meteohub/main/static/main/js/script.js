@@ -204,3 +204,11 @@ cityInput.addEventListener("keydown", (event) => {
         fetchWeatherData(cityName);
     }
 });
+
+historyBlock.addEventListener("click", (event) => {
+    const clickedItem = event.target;
+    const ItemContent = clickedItem.textContent;
+
+    fetchWeatherData(ItemContent);
+    addToHistory(ItemContent);
+});
