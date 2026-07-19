@@ -4,15 +4,18 @@ const tableStatsBlock = document.querySelector("#table-statistics");
 const cityInput = document.querySelector("#city-input");
 const citySearchButton = document.querySelector("#city-search");
 const historyBlock = document.querySelector(".search-history");
+const cityHeader = document.querySelector("#city-header");
+const cardsContainer = document.querySelector("#cards-container");
 
 const rawDaysDATA = document.querySelector("#days-stats").textContent;
-const daysDATA = JSON.parse(rawDaysDATA);
+let daysDATA = JSON.parse(rawDaysDATA);
 
 const generalStats = tableStatsBlock.innerHTML;
 
 const maxHistoryLenth = 5;
 
 let history = getSearchHistory();
+let currentOpenDate = null;
 
 renderHistory();
 
@@ -22,13 +25,11 @@ function getSearchHistory() {
 }
 
 function addToHistory(cityName) {
-    const cleanName = cityName.trim();
-    if (!cleanName) return;
 
     let history = getSearchHistory();
-    history = history.filter(city => city.toLowerCase() !== cleanName.toLowerCase());
+    history = history.filter(city => city.toLowerCase() !== cityName.toLowerCase());
 
-    history.unshift(cleanName);
+    history.unshift(cityName);
 
     if (history.length > maxHistoryLenth) {
         history.pop();
@@ -53,24 +54,22 @@ function renderHistory() {
     });
 }
 
-sideBarButton.addEventListener("click", () => {
-    document.getElementById("sidebar").classList.toggle("collapsed");
-});
+function renderDaysStats(date) {
+    chosenDayDATA = daysDATA[date];
 
-daysBlock.addEventListener("click", (event) => {
-    const clickedEl = event.target.closest("div");
-    if (!clickedEl || !clickedEl.classList.contains("day-name")) return;
+    if (!chosenDayDATA) {
+        renderGeneralStats();
+        return;
+    }
 
-    chosenDayDATA = daysDATA[clickedEl.dataset.date];
-    
     tableStatsBlock.innerHTML = 
                         `<div id="stats-head">
-                            <h1>Статистика за ${clickedEl.dataset.date}</h1>
+                            <h3>Статистика за ${date}</h3>
                             <button>X</button>
                         </div>
                         <div id="stats-body-day">
 
-                            <h2>Температура</h2>
+                            <h4>Температура</h4>
                             <div class="stats-type">
                                 
                                 <div class="stat-card">
@@ -96,7 +95,7 @@ daysBlock.addEventListener("click", (event) => {
                                 </div>
                             </div>
 
-                            <h2>Погода</h2>
+                            <h4>Погода</h4>
                             <div class="stats-type">
 
                                 <div class="stat-card">
@@ -110,21 +109,113 @@ daysBlock.addEventListener("click", (event) => {
                                 </div>
                             </div>
 
-                        </div>`
+                        </div>`;
 
     const exitBtn = tableStatsBlock.querySelector("button");
 
     exitBtn.addEventListener("click", () => {
-        tableStatsBlock.innerHTML = generalStats;
+        renderGeneralStats();
     });
+}
+
+function renderGeneralStats(data) {
+    currentOpenDate = null;
+    tableStatsBlock.innerHTML = `<div id="stats-head">
+                            <h3>Загальна статистика</h3>
+                        </div>
+                        <div id="stats-body-general">
+
+                            <div class="stat-card">
+                                <span class="stat-name">Максимальна температура</span>
+                                <span class="stat-content">${data.highest_temp[0]}</span>
+                                <span class="stat-source">${data.highest_temp[1]}</span>
+                            </div>
+
+                            <div class="stat-card">
+                                <span class="stat-name">Мінімальна температура</span>
+                                <span class="stat-content">${data.lowest_temp[0]}</span>
+                                <span class="stat-source">${data.lowest_temp[1]}</span>
+                            </div>
+
+                            <div class="stat-card">
+                                <span class="stat-name">Найчастіша погода</span>
+                                <span class="stat-content">${data.most_frequent_condition}</span>
+                            </div>
+
+                            <div class="stat-card">
+                                <span class="stat-name">Найрідкісніша погода</span>
+                                <span class="stat-content">${data.least_frequent_condition}</span>
+                            </div>
+                        </div>`;
+}
+
+sideBarButton.addEventListener("click", () => {
+    document.getElementById("sidebar").classList.toggle("collapsed");
+});
+
+daysBlock.addEventListener("click", (event) => {
+    const clickedEl = event.target.closest("div");
+    if (!clickedEl || !clickedEl.classList.contains("day-name")) return;
+
+    renderDaysStats(clickedEl.dataset.date);
 });
 
 citySearchButton.addEventListener("click", () => {
-    addToHistory(cityInput.value);
+    const cityName = cityInput.value.trim();
+    if (!cityName) return;
+
+    addToHistory(cityName);
+
+    fetch(`/api/weather/?city=${encodeURIComponent(cityName)}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Помилка сервера: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            daysDATA = data.days_statistics;
+            
+            cityHeader.textContent = `Прогнози для міста ${data.city_name}`;
+            cardsContainer.innerHTML = data.days_html;
+
+            if (currentOpenDate !== null) {
+                renderDaysStats(currentOpenDate);
+            }
+            else{
+                renderGeneralStats(data.general_statistics);
+            }
+        })
+        .catch(error => console.error('Помилка:', error));
 });
 
 cityInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-        addToHistory(cityInput.value);
-    }
+        const cityName = cityInput.value.trim();
+        if (!cityName) return;
+
+        addToHistory(cityName);
+
+        fetch(`/api/weather/?city=${encodeURIComponent(cityName)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Помилка сервера: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                daysDATA = data.days_statistics;
+                
+                cityHeader.textContent = `Прогнози для міста ${data.city_name}`;
+                cardsContainer.innerHTML = data.days_html;
+
+                if (currentOpenDate !== null) {
+                    renderDaysStats(currentOpenDate);
+                }
+                else{
+                    renderGeneralStats(data.general_statistics);
+                }
+            })
+            .catch(error => console.error('Помилка:', error));
+        }
 });

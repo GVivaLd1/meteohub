@@ -364,6 +364,9 @@ header h1 {
 
 /* Секція порівняння погоди */
 #weather-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 95%; 
     max-width: 1050px;
     border-radius: var(--main-radius);
@@ -371,6 +374,14 @@ header h1 {
     padding-bottom: 20px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     margin: 0 auto;
+}
+
+#weather-info h3 {
+    padding-top: 0;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.2px;
 }
 
 /* Вибір міста та результати порівняння джерел */
@@ -547,7 +558,7 @@ header h1 {
     position: relative;
 }
 
-#stats-head h1 {
+#stats-head h3 {
     color: #ffffff;
     font-size: 26px;
     font-weight: 700;
@@ -585,7 +596,7 @@ header h1 {
     flex-direction: column;
 }
 
-#stats-body-day h2 {
+#stats-body-day h4 {
     color: #ffffff;
     font-size: 20px;
     font-weight: 700;
@@ -650,7 +661,8 @@ header h1 {
 }
 
 .days-of-week, 
-.source-report {
+.source-report,
+#cards-container {
     display: contents; 
 }
 
