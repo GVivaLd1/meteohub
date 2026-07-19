@@ -39,6 +39,33 @@ function addToHistory(cityName) {
     renderHistory();
 }
 
+async function fetchWeatherData(cityName) {
+    try{
+        const response = await fetch(`/api/weather/?city=${encodeURIComponent(cityName)}`);
+
+        if (!response.ok) {
+                throw new Error(`Помилка сервера: ${response.status}`);
+            }
+
+        const responseData = await response.json();
+
+        daysDATA = responseData.days_statistics;
+            
+            cityHeader.textContent = `Прогнози для міста ${responseData.city_name}`;
+            cardsContainer.innerHTML = responseData.days_html;
+
+            if (currentOpenDate !== null) {
+                renderDaysStats(currentOpenDate);
+            }
+            else{
+                renderGeneralStats(responseData.general_statistics);
+            }
+    }
+    catch (error) {
+        console.log(`Помилка: ${error}`);
+    }
+}
+
 function renderHistory() {
     const history = getSearchHistory();
 
@@ -165,28 +192,7 @@ citySearchButton.addEventListener("click", () => {
     if (!cityName) return;
 
     addToHistory(cityName);
-
-    fetch(`/api/weather/?city=${encodeURIComponent(cityName)}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Помилка сервера: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            daysDATA = data.days_statistics;
-            
-            cityHeader.textContent = `Прогнози для міста ${data.city_name}`;
-            cardsContainer.innerHTML = data.days_html;
-
-            if (currentOpenDate !== null) {
-                renderDaysStats(currentOpenDate);
-            }
-            else{
-                renderGeneralStats(data.general_statistics);
-            }
-        })
-        .catch(error => console.error('Помилка:', error));
+    fetchWeatherData(cityName);
 });
 
 cityInput.addEventListener("keydown", (event) => {
@@ -195,27 +201,6 @@ cityInput.addEventListener("keydown", (event) => {
         if (!cityName) return;
 
         addToHistory(cityName);
-
-        fetch(`/api/weather/?city=${encodeURIComponent(cityName)}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Помилка сервера: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                daysDATA = data.days_statistics;
-                
-                cityHeader.textContent = `Прогнози для міста ${data.city_name}`;
-                cardsContainer.innerHTML = data.days_html;
-
-                if (currentOpenDate !== null) {
-                    renderDaysStats(currentOpenDate);
-                }
-                else{
-                    renderGeneralStats(data.general_statistics);
-                }
-            })
-            .catch(error => console.error('Помилка:', error));
-        }
+        fetchWeatherData(cityName);
+    }
 });
