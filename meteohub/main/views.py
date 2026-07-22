@@ -185,7 +185,7 @@ def get_weather_data(request):
 
     days_html_fragment = render_to_string(
         "main/days_cards.html",
-        {"grouped_data": grouped_data}
+        {"grouped_data": [grouped_data, target_dates, city.name]}
     )
 
     # Отримання часу останнього парсингу

@@ -1,16 +1,18 @@
 const sideBarButton = document.querySelector("#toggle-sidebar-btn");
-const daysBlock = document.querySelector(".days-of-week");
-const tableStatsBlock = document.querySelector("#table-statistics");
 const cityInput = document.querySelector("#city-input");
 const citySearchButton = document.querySelector("#city-search");
 const historyBlock = document.querySelector(".search-history");
 const cityHeader = document.querySelector("#city-header");
-const cardsContainer = document.querySelector("#cards-container");
+const summaryBlock = document.querySelector("#summary");
+const searchBlock = document.querySelector("#search-block");
+const searchLabel = document.querySelector("label");
+const statsWrapper = document.querySelector("#stats-wrapper");
+const forecastWrapper = document.querySelector("#forecast-wrapper");
+const historyWrapper = document.querySelector("#history-wrapper");
 
 const rawDaysDATA = document.querySelector("#days-stats").textContent;
-let daysDATA = JSON.parse(rawDaysDATA);
-
-const generalStats = tableStatsBlock.innerHTML;
+let daysData = JSON.parse(rawDaysDATA);
+let generalData = null;
 
 const maxHistoryLenth = 5;
 
@@ -49,17 +51,36 @@ async function fetchWeatherData(cityName) {
 
         const responseData = await response.json();
 
-        daysDATA = responseData.days_statistics;
+        daysData = responseData.days_statistics;
+        generalData = responseData.general_statistics;
             
-            cityHeader.textContent = `Прогнози для міста ${responseData.city_name}`;
-            cardsContainer.innerHTML = responseData.days_html;
+        forecastWrapper.innerHTML = responseData.days_html;
 
-            if (currentOpenDate !== null) {
-                renderDaysStats(currentOpenDate);
-            }
-            else{
-                renderGeneralStats(responseData.general_statistics);
-            }
+        if (summaryBlock.classList.contains("initial-state")) {
+            summaryBlock.classList.remove("initial-state");
+            searchBlock.classList.add("weather-found");
+
+            statsWrapper.style.display = "contents";
+            forecastWrapper.style.display = "contents";
+            historyWrapper.style.display = "contents";
+
+            searchLabel.textContent = "Пошук міста";
+        }
+
+        if (currentOpenDate !== null) {
+            renderDaysStats(currentOpenDate);
+        }
+        else{
+            renderGeneralStats();
+        }
+
+        const daysBlock = document.querySelector(".days-of-week");
+        daysBlock.addEventListener("click", (event) => {
+            const clickedEl = event.target.closest("div");
+            if (!clickedEl || !clickedEl.classList.contains("day-name")) return;
+
+            renderDaysStats(clickedEl.dataset.date);
+        });
     }
     catch (error) {
         console.log(`Помилка: ${error}`);
@@ -82,15 +103,16 @@ function renderHistory() {
 }
 
 function renderDaysStats(date) {
-    chosenDayDATA = daysDATA[date];
+    const chosenDayDATA = daysData[date];
 
     if (!chosenDayDATA) {
         renderGeneralStats();
         return;
     }
 
-    tableStatsBlock.innerHTML = 
-                        `<div id="stats-head">
+    statsWrapper.innerHTML = `
+                    <div id="table-statistics">
+                        <div id="stats-head">
                             <h3>Статистика за ${date}</h3>
                             <button>X</button>
                         </div>
@@ -136,55 +158,52 @@ function renderDaysStats(date) {
                                 </div>
                             </div>
 
-                        </div>`;
+                        </div>
+                    </div>`;
 
-    const exitBtn = tableStatsBlock.querySelector("button");
+    const exitBtn = statsWrapper.querySelector("button");
 
     exitBtn.addEventListener("click", () => {
         renderGeneralStats();
     });
 }
 
-function renderGeneralStats(data) {
+function renderGeneralStats() {
     currentOpenDate = null;
-    tableStatsBlock.innerHTML = `<div id="stats-head">
+    statsWrapper.innerHTML = `
+                    <div id="table-statistics">
+                        <div id="stats-head">
                             <h3>Загальна статистика</h3>
                         </div>
                         <div id="stats-body-general">
 
                             <div class="stat-card">
                                 <span class="stat-name">Максимальна температура</span>
-                                <span class="stat-content">${data.highest_temp[0]}</span>
-                                <span class="stat-source">${data.highest_temp[1]}</span>
+                                <span class="stat-content">${generalData.highest_temp[0]}</span>
+                                <span class="stat-source">${generalData.highest_temp[1]}</span>
                             </div>
 
                             <div class="stat-card">
                                 <span class="stat-name">Мінімальна температура</span>
-                                <span class="stat-content">${data.lowest_temp[0]}</span>
-                                <span class="stat-source">${data.lowest_temp[1]}</span>
+                                <span class="stat-content">${generalData.lowest_temp[0]}</span>
+                                <span class="stat-source">${generalData.lowest_temp[1]}</span>
                             </div>
 
                             <div class="stat-card">
                                 <span class="stat-name">Найчастіша погода</span>
-                                <span class="stat-content">${data.most_frequent_condition}</span>
+                                <span class="stat-content">${generalData.most_frequent_condition}</span>
                             </div>
 
                             <div class="stat-card">
                                 <span class="stat-name">Найрідкісніша погода</span>
-                                <span class="stat-content">${data.least_frequent_condition}</span>
+                                <span class="stat-content">${generalData.least_frequent_condition}</span>
                             </div>
-                        </div>`;
+                        </div>
+                    </div>`;
 }
 
 sideBarButton.addEventListener("click", () => {
     document.getElementById("sidebar").classList.toggle("collapsed");
-});
-
-daysBlock.addEventListener("click", (event) => {
-    const clickedEl = event.target.closest("div");
-    if (!clickedEl || !clickedEl.classList.contains("day-name")) return;
-
-    renderDaysStats(clickedEl.dataset.date);
 });
 
 citySearchButton.addEventListener("click", () => {

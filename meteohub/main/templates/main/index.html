@@ -124,76 +124,32 @@
                 <h2>Порівняння джерел</h2>
             </div>
             <div id="weather-info">
-                <div id="summary">
+                <div id="summary" class="initial-state">
                     <div id="search-block">
-                        <label for="city-selector">Вибір міста</label>
+                        <label for="city">Оберіть місто, щоб почати</label>
                         <div id="city-search">
                             <input type="text" name="city" id="city-input" placeholder="Оберіть місто для аналітики…" autocomplete="off">
                             <button type="button" aria-label="Знайти місто"></button>
                         </div>
 
-                        <div class="history-title">
-                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                            <span>Нещодавні пошуки</span>
-                        </div>
-
-                        <ul class="search-history">
-                            <li class="history-element">Київ</li>
-                        </ul>
-                    </div>
-                    <div id="table-statistics">
-                        <div id="stats-head">
-                            <h3>Загальна статистика</h3>
-                        </div>
-                        <div id="stats-body-general">
-
-                            <div class="stat-card">
-                                <span class="stat-name">Максимальна температура</span>
-                                <span class="stat-content">{{ general_statistics.highest_temp.0 }}</span>
-                                <span class="stat-source">{{ general_statistics.highest_temp.1 }}</span>
+                        <div id="history-wrapper">
+                            <div class="history-title">
+                                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                <span>Нещодавні пошуки</span>
                             </div>
 
-                            <div class="stat-card">
-                                <span class="stat-name">Мінімальна температура</span>
-                                <span class="stat-content">{{ general_statistics.lowest_temp.0 }}</span>
-                                <span class="stat-source">{{ general_statistics.lowest_temp.1 }}</span>
-                            </div>
-
-                            <div class="stat-card">
-                                <span class="stat-name">Найчастіша погода</span>
-                                <span class="stat-content">{{ general_statistics.most_frequent_condition }}</span>
-                            </div>
-
-                            <div class="stat-card">
-                                <span class="stat-name">Найрідкісніша погода</span>
-                                <span class="stat-content">{{ general_statistics.least_frequent_condition }}</span>
-                            </div>
+                            <ul class="search-history"></ul>
                         </div>
                         
                     </div>
-                </div>
-                
-                <h3 id="city-header">Прогнози для міста {{city.name}}</h3>
 
-                <div id="comparison-block">
-                    <div class="days-of-week">
-                        <div class="spacer"></div>
-                        {% for d in dates %}
-                            <div class="day-name" data-date="{{ d|date:'d.m' }}">
-                                <span class="day-weekday">{{ d|date:"l" }}</span>
-                                <span class="day-date">{{ d|date:"d.m" }}</span>
-                            </div>
-                        {% endfor %}
-                        <div class="spacer"></div>
-                    </div>
-
-                    <div id="cards-container">
-                        {% include "main/days_cards.html" %}
-                    </div>
+                    <div id="stats-wrapper"></div>
                 </div>
+
+                <div id="forecast-wrapper"></div>
             </div>
         </section>
         <section id="statistics" class="page-section page-section--statistics">

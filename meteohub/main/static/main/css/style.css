@@ -399,6 +399,20 @@ header h1 {
     padding: 25px 0;
 }
 
+#forecast-wrapper, 
+#stats-wrapper, 
+#history-wrapper {
+    display: none;
+}
+
+#forecast-wrapper {
+    width: 100%;
+}
+
+#stats-wrapper {
+    width: 70%;
+}
+
 #search-block {
     width: 30%;
     height: 100%;
@@ -406,6 +420,10 @@ header h1 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    
+}
+
+.weather-found {
     border-right: 1px solid rgba(255,255,255,0.2);
 }
 
@@ -540,7 +558,7 @@ header h1 {
 }
 
 #table-statistics {
-    width: 70%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -624,7 +642,7 @@ header h1 {
     gap: 6px;
     text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    height: 90px;
+    height: 92px;
 }
 
 .stat-card:hover {
@@ -641,8 +659,8 @@ header h1 {
 }
 
 .stat-content {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 650;
     color: #2c3e50;
 }
 
