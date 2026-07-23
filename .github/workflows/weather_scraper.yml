@@ -31,4 +31,5 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_NAME: ${{ secrets.DB_NAME }}
         run: |
+          cd meteohub
           python manage.py update_forecast
