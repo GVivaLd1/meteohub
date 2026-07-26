@@ -3,6 +3,8 @@ from django.db import models
 class City(models.Model):
     name = models.CharField(verbose_name="Назва міста", max_length=50, unique=True)
     url_name = models.CharField(verbose_name="URL-назва", max_length=50, unique=True, null=True)
+    latitude = models.DecimalField(verbose_name="Широта", max_digits=6, decimal_places=3, null=True)
+    longitude = models.DecimalField(verbose_name="Довгота", max_digits=6, decimal_places=3, null=True)
     is_monitored = models.BooleanField(default=False)
 
     def __str__(self) -> str:
@@ -32,7 +34,8 @@ class WeatherReport(models.Model):
     min_temp = models.IntegerField(verbose_name="Мін. температура", null=True)
     max_temp = models.IntegerField(verbose_name="Макс. температура", null=True)
     parsed_at = models.DateTimeField(verbose_name="Час парсингу", auto_now=True, null=True)
-    target_date = models.DateField(verbose_name="Дата прогнозу", null=True)
+    target_date = models.DateField(verbose_name="Прогноз на дату", null=True)
+    forecast_date = models.DateField(verbose_name="Дата створення прогнозу", null=True)
     condition = models.CharField(verbose_name="Стан погоди", max_length=20, choices=weather_coditions, null=True)
 
     @property
@@ -42,7 +45,7 @@ class WeatherReport(models.Model):
         return f"main/img/weather_icons/{self.condition}.png"
 
     class Meta:
-        unique_together = ['city', 'source', 'target_date']
+        unique_together = ["city", "source", "target_date", "forecast_date"]
         verbose_name = "Прогноз погоди"
         verbose_name_plural = "Прогнози погоди"
 
