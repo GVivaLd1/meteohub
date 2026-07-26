@@ -20,3 +20,10 @@ meteohub/main/parsers/__pycache__/__init__.cpython-313.pyc
 meteohub/main/parsers/__pycache__/sinoptic.cpython-313.pyc
 meteohub/main/management/commands/__pycache__/update_forecast.cpython-313.pyc
 meteohub/main/parsers/__pycache__/meteofor.cpython-313.pyc
+test.py
+.vscode/settings.json
+meteohub/main/management/exceptions.txt
+meteohub/main/management/commands/__pycache__/fetch_weather.cpython-313.pyc
+meteohub/main/migrations/__pycache__/0006_alter_weatherreport_unique_together_city_latitude_and_more.cpython-313.pyc
+meteohub/main/parsers/__pycache__/foreca.cpython-313.pyc
+meteohub/main/parsers/__pycache__/pogoda_radar.cpython-313.pyc
