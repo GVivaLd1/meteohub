@@ -13,13 +13,17 @@ weather_map = {
     "Хмарно, сильний дощ, гроза": "storm",
     "Малохмарно, дощ, гроза": "storm",
     "Хмарно, дощ, гроза, туман": "storm",
+    "Похмуро, сильний дощ, гроза": "storm",
+    "Похмуро, дощ, гроза": "storm",
     "Хмарно, невеликий дощ": "sunny_rain",
     "Малохмарно, невеликий дощ": "sunny_rain",
     "Малохмарно, дощ": "sunny_rain",
+    "Хмарно, невеликий дощ, туман": "sunny_rain",
     "Хмарно, дощ": "rain",
     "Похмуро, дощ": "rain",
     "Малохмарно": "little_clouds",
     "Хмарно, без істотних опадів": "little_clouds",
+    "Малохмарно, без істотних опадів": "little_clouds",
     "Похмуро": "clouds",
     "Хмарно": "clouds",
     "Малохмарно, град": "hailstorm",
@@ -27,12 +31,17 @@ weather_map = {
     "Похмуро, невеликий дощ": "little_rain"
 }
 
+city_codes_map = {
+    "odesa": "4982",
+    "kyiv": "4944"
+}
+
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
 }
 
 def parse_meteofor(city_obj):
-    url = f"https://meteofor.com.ua/weather-{city_obj.url_name}-4944/weekly/"
+    url = f"https://meteofor.com.ua/weather-{city_obj.url_name}-{city_codes_map[city_obj.url_name]}/weekly/"
 
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, "lxml")
@@ -65,13 +74,14 @@ def parse_meteofor(city_obj):
         if not weather_code:
 
             with open("main/management/exceptions.txt", "a", encoding="utf-8") as file:
-                file.write(f"[Meteofor] - {weather_string} ({target_date})\n")
+                file.write(f"[Meteofor] - {weather_string} ({city_obj.name}, {today_date}:{target_date})\n")
             continue
 
         report, created = WeatherReport.objects.update_or_create(
             city=city_obj,
             source="Meteofor",
             target_date=target_date,
+            forecast_date=today_date,
             
             defaults={
                 "min_temp": min_temp,

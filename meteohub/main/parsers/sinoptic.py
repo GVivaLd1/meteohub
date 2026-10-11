@@ -64,13 +64,14 @@ def parse_sinoptic(city_obj):
             if not weather_code:
 
                 with open("main/management/exceptions.txt", "a", encoding="utf-8") as file:
-                    file.write(f"[Sinoptik] - {weather_string} ({target_date})\n")
+                    file.write(f"[Sinoptik] - {weather_string} ({city_obj.name}, {today_date}:{target_date})\n")
                 continue
             
             report, created = WeatherReport.objects.update_or_create(
                 city=city_obj,
                 source="Sinoptik",
                 target_date=target_date,
+                forecast_date=today_date,
                 
                 defaults={
                     "min_temp": min_temp,

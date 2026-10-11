@@ -11,6 +11,7 @@ weather_map = {
     "Ясно": "clear",
     "Мінлива хмарність, можливі грози з дощем": "storm",
     "Хмарно, грози з дощем": "storm",
+    "Похмуро, грози з дощем": "storm",
     "Мінлива хмарність, зливи": "sunny_rain",
     "Похмуро, дощ": "little_rain",
     "Мінлива хмарність, невеликий дощ": "sunny_rain",
@@ -58,13 +59,14 @@ def parse_foreca(city_obj):
         if not weather_code:
 
             with open("main/management/exceptions.txt", "a", encoding="utf-8") as file:
-                file.write(f"[Foreca] - {weather_string} ({target_date})\n")
+                file.write(f"[Foreca] - {weather_string} ({city_obj.name}, {today_date}:{target_date})\n")
             continue
 
         report, created = WeatherReport.objects.update_or_create(
             city=city_obj,
             source="Foreca",
             target_date=target_date,
+            forecast_date=today_date,
             
             defaults={
                 "min_temp": min_temp,

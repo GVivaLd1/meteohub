@@ -13,7 +13,9 @@ weather_map = {
     "невеликий дощ": "sunny_rain",
     "злива": "sunny_rain",
     "мінлива хмарність": "little_clouds",
-    "переважно хмарно": "clouds"
+    "переважно хмарно": "clouds",
+    "хмарно": "clouds",
+    "дощ": "rain"
 }
 
 headers = {
@@ -52,13 +54,14 @@ def parse_pogoda_radar(city_obj):
         if not weather_code:
 
             with open("main/management/exceptions.txt", "a", encoding="utf-8") as file:
-                file.write(f"[Pogoda & Radar] - {weather_string} ({target_date})\n")
+                file.write(f"[Pogoda & Radar] - {weather_string} ({city_obj.name}, {today_date}:{target_date})\n")
             continue
 
         report, created = WeatherReport.objects.update_or_create(
             city=city_obj,
             source="Pogoda & Radar",
             target_date=target_date,
+            forecast_date=today_date,
             
             defaults={
                 "min_temp": min_temp,
